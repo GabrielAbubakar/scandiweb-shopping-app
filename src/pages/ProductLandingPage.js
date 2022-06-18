@@ -3,6 +3,7 @@ import React from "react";
 import client from '../graphql/apolloClient'
 import Navbar from "../components/navbar";
 import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
+import ProductCard from "../components/productCard";
 
 
 class ProductLandingPage extends React.Component {
@@ -51,27 +52,27 @@ class ProductLandingPage extends React.Component {
 
 
     render() {
-        // const { name, id } = this.state.products
+        const { products } = this.state
 
         console.log(this.state.products);
         return (
-            <>
+            <div className="container">
                 <Navbar changeCategoryClothes={this.changeCategoryClothes}
                     changeCategoryTech={this.changeCategoryTech}
                     changeCategoryAll={this.changeCategoryAll}
                     categoryName={this.state.category}
                 />
 
-                <h1>{this.state.category.toUpperCase()} PRODUCTS</h1>
+                <h1>{this.state.category} Products</h1>
 
-                <ul>
+                <div className="productGrid">
                     {
-                        this.state.products && this.state.products.map(item => (
-                            <li key={item.id}>{item.name}</li>
+                        products && products.map(item => (
+                            <ProductCard key={item.id} name={item.name} price={item.prices[0].amount} img={item.gallery[0]} />
                         ))
                     }
-                </ul>
-            </>
+                </div>
+            </div>
         )
     }
 }
