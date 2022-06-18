@@ -3,3 +3,46 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    padding-inline: 5rem;
+    font-family: sans-serif;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.7rem 0;
+}
+
+.navigation>* {
+    flex: 1;
+    display: flex;
+    /* justify-content: center; */
+}
+
+.categories {
+    display: flex;
+    gap: 2rem;
+    justify-content: start;
+}
+
+.categories li {
+    list-style-type: none;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.categories li:hover {
+    color: #05cb05;
+}
+
+.logo {
+    justify-content: center;
+}
+
+.shopping {
+    display: flex;
+    justify-content: end;
+}

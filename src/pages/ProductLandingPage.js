@@ -1,6 +1,8 @@
 import React from "react";
-import { gql } from '@apollo/client';
+// import { gql } from '@apollo/client';
 import client from '../graphql/apolloClient'
+import Navbar from "../components/navbar";
+import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
 
 
 class ProductLandingPage extends React.Component {
@@ -8,50 +10,60 @@ class ProductLandingPage extends React.Component {
         super(props)
 
         this.state = {
-            products: []
+            products: [],
+            category: ''
         }
 
-        this.handleEvent = this.handleEvent.bind(this)
+        this.changeCategoryClothes = this.changeCategoryClothes.bind(this)
+        this.changeCategoryTech = this.changeCategoryTech.bind(this)
+        this.changeCategoryAll = this.changeCategoryAll.bind(this)
     }
 
     componentDidMount() {
-        const getProducts = gql`
-        query {
-            category {
-                products {
-                  name
-                  id
-                  description
-                  inStock
-                  prices{
-                    currency {
-                      label
-                      symbol
-                    }
-                    amount
-                  }
-                }
-            }
-        }
-        `
-
         client.query({
-            query: getProducts
-        }).then(res => { this.setState({ products: res.data.category.products }) })
+            query: getAllProducts
+        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
             .catch(e => console.log(e));
     }
 
-    handleEvent() {
-        console.log(this);
+    changeCategoryAll() {
+        client.query({
+            query: getAllProducts
+        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+            .catch(e => console.log(e));
     }
+
+    changeCategoryClothes() {
+        client.query({
+            query: getProductsByClothesCategory
+        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+            .catch(e => console.log(e));
+    }
+
+    changeCategoryTech() {
+        client.query({
+            query: getProductsByTechCategory
+        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+            .catch(e => console.log(e));
+    }
+
+
+
 
     render() {
         // const { name, id } = this.state.products
 
+        console.log(this.state.products);
         return (
             <>
-                <h1>Hello App</h1>
-                {console.log(this.state.products)}
+                <Navbar changeCategoryClothes={this.changeCategoryClothes}
+                    changeCategoryTech={this.changeCategoryTech}
+                    changeCategoryAll={this.changeCategoryAll}
+                    categoryName={this.state.category}
+                />
+
+                <h1>{this.state.category.toUpperCase()} PRODUCTS</h1>
+
                 <ul>
                     {
                         this.state.products && this.state.products.map(item => (
