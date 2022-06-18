@@ -4,6 +4,8 @@ import client from '../graphql/apolloClient'
 import Navbar from "../components/navbar";
 import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
 import ProductCard from "../components/productCard";
+import { connect } from 'react-redux';
+import { storedProductsAction, setCategoryAction } from '../redux/actions'
 
 
 class ProductLandingPage extends React.Component {
@@ -11,8 +13,8 @@ class ProductLandingPage extends React.Component {
         super(props)
 
         this.state = {
-            products: [],
-            category: ''
+            // products: [],
+            // category: ''
         }
 
         this.changeCategoryClothes = this.changeCategoryClothes.bind(this)
@@ -23,28 +25,41 @@ class ProductLandingPage extends React.Component {
     componentDidMount() {
         client.query({
             query: getAllProducts
-        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+        }).then(res => {
+            // this.setState({ products: res.data.category.products })
+            this.props.setCategoryDispatch(res.data.category.name)
+            this.props.storeProductsDispatch(res.data.category.products)
+        })
             .catch(e => console.log(e));
     }
 
     changeCategoryAll() {
         client.query({
             query: getAllProducts
-        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+        }).then(res => {
+            this.props.setCategoryDispatch(res.data.category.name)
+            this.props.storeProductsDispatch(res.data.category.products)
+        })
             .catch(e => console.log(e));
     }
 
     changeCategoryClothes() {
         client.query({
             query: getProductsByClothesCategory
-        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+        }).then(res => {
+            this.props.setCategoryDispatch(res.data.category.name)
+            this.props.storeProductsDispatch(res.data.category.products)
+        })
             .catch(e => console.log(e));
     }
 
     changeCategoryTech() {
         client.query({
             query: getProductsByTechCategory
-        }).then(res => { this.setState({ products: res.data.category.products, category: res.data.category.name }) })
+        }).then(res => {
+            this.props.setCategoryDispatch(res.data.category.name)
+            this.props.storeProductsDispatch(res.data.category.products)
+        })
             .catch(e => console.log(e));
     }
 
@@ -52,18 +67,19 @@ class ProductLandingPage extends React.Component {
 
 
     render() {
-        const { products } = this.state
+        const { products, category } = this.props
 
-        console.log(this.state.products);
+        // console.log(this.state.products);
+        // console.log(this.props);
         return (
             <div className="container">
                 <Navbar changeCategoryClothes={this.changeCategoryClothes}
                     changeCategoryTech={this.changeCategoryTech}
                     changeCategoryAll={this.changeCategoryAll}
-                    categoryName={this.state.category}
+                    categoryName={category}
                 />
 
-                <h1>{this.state.category} Products</h1>
+                <h1>{category} Products</h1>
 
                 <div className="productGrid">
                     {
@@ -77,4 +93,19 @@ class ProductLandingPage extends React.Component {
     }
 }
 
-export default ProductLandingPage
+function mapStateToProps(state) {
+    return {
+        category: state.cart.category,
+        currency: state.cart.currency,
+        products: state.cart.products,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        storeProductsDispatch: (products) => dispatch(storedProductsAction(products)),
+        setCategoryDispatch: (category) => dispatch(setCategoryAction(category))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductLandingPage)

@@ -16,7 +16,7 @@ class ProductCard extends React.Component {
         return (
             <div className="productCard">
                 <figure>
-                    <img src={img} alt="product" width={356} height={338} />
+                    <img src={img} alt={name} width={356} height={338} />
                 </figure>
                 <h3>{name}</h3>
                 <p>$ {price}</p>
