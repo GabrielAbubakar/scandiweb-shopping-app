@@ -2,7 +2,7 @@ const initialState = {
     products: [],
     cart: [],
     currency: { unit: "USD", symbol: "$" },
-    category: "clothes"
+    category: "all"
 }
 
 const cartSlice = (state = initialState, action) => {
