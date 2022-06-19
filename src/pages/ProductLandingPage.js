@@ -1,11 +1,10 @@
 import React from "react";
-// import { gql } from '@apollo/client';
 import client from '../graphql/apolloClient'
-import Navbar from "../components/navbar";
-import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
-import ProductCard from "../components/productCard";
 import { connect } from 'react-redux';
+import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
 import { storedProductsAction, setCategoryAction } from '../redux/actions'
+import Navbar from "../components/navbar";
+import ProductCard from "../components/productCard";
 
 
 class ProductLandingPage extends React.Component {
@@ -70,7 +69,7 @@ class ProductLandingPage extends React.Component {
         const { products, category } = this.props
 
         // console.log(this.state.products);
-        // console.log(this.props);
+        console.log(this.props);
         return (
             <div className="container">
                 <Navbar changeCategoryClothes={this.changeCategoryClothes}

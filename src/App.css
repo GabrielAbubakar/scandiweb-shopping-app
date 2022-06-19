@@ -7,12 +7,14 @@
 body {
     padding-inline: 8rem;
     font-family: sans-serif;
+    margin-bottom: 7rem;
 }
 
 .navigation {
     display: flex;
     justify-content: space-between;
     padding: 1.7rem 0;
+    margin-bottom: 3rem;
 }
 
 .navigation>* {
@@ -77,6 +79,7 @@ body {
     max-height: 338px;
     margin-bottom: 1rem;
     overflow: hidden;
+    border: 1px solid rgba(128, 128, 128, 0.134);
 }
 
 .productCard img {
@@ -90,6 +93,7 @@ body {
 .productCard h3 {
     color: rgba(29, 31, 34, 1);
     font-size: 1.2125rem;
+    margin-bottom: .5rem;
 }
 
 .addCart {

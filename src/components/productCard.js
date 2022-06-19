@@ -19,7 +19,7 @@ class ProductCard extends React.Component {
                     <img src={img} alt={name} width={356} height={338} />
                 </figure>
                 <h3>{name}</h3>
-                <p>$ {price}</p>
+                <p>${price}</p>
                 <button className="addCart">
                     <img src={addCart} alt="cart" />
                 </button>

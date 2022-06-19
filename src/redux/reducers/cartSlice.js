@@ -1,7 +1,7 @@
 const initialState = {
     products: [],
     cart: [],
-    currency: { unit: "USD", symbol: "$" },
+    currency: { label: "USD", symbol: "$" },
     category: ""
 }
 
