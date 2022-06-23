@@ -11,3 +11,10 @@ export const setCategoryAction = (category) => {
         payload: category
     }
 }
+
+export const addedItemAction = (id) => {
+    return {
+        type: 'cart/addedItem',
+        payload: id
+    }
+}

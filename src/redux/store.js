@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import { persistReducer } from "redux-persist";
+import { compose} from 'react-redux'
 import storage from "redux-persist/lib/storage";
 import rootReducer from './reducers/index.js'
 // import cartSlice from './reducers/cartSlice'

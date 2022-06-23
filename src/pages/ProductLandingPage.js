@@ -83,7 +83,12 @@ class ProductLandingPage extends React.Component {
                 <div className="productGrid">
                     {
                         products && products.map(item => (
-                            <ProductCard key={item.id} name={item.name} price={item.prices[0].amount} img={item.gallery[0]} />
+                            <ProductCard
+                                key={item.id}
+                                name={item.name}
+                                price={item.prices[0].amount}
+                                img={item.gallery[0]}
+                                id={item.id} />
                         ))
                     }
                 </div>
@@ -97,6 +102,7 @@ function mapStateToProps(state) {
         category: state.cart.category,
         currency: state.cart.currency,
         products: state.cart.products,
+        cart: state.cart.cart
     }
 }
 

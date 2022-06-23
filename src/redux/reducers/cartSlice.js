@@ -19,6 +19,18 @@ const cartSlice = (state = initialState, action) => {
                 category: action.payload
             }
         }
+        case 'cart/addedItem': {
+            const id = action.payload
+
+
+            return {
+                ...state,
+                cart: [
+                    ...state.cart,
+                    state.products.find(item => item.id === id)
+                ]
+            }
+        }
 
 
 
