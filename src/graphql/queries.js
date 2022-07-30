@@ -127,3 +127,36 @@ export const getProductsByTechCategory = gql`
           }
     }
 `
+
+export const getProductsBySpecificCategory = gql`
+    query getProductsBySpecificCategory($title: String!) {
+        category(input: { title: $title }) {
+          name
+            products {
+              name
+              id
+              inStock
+              gallery
+              description
+              category
+              attributes {
+                id
+                name
+                type
+                items {
+                  id
+                  value
+                  displayValue
+                }
+              }
+              prices {
+                currency {
+                  label
+                  symbol
+                }
+                amount
+              }
+            }
+          }
+    }
+`

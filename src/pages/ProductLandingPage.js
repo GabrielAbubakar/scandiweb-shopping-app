@@ -1,7 +1,7 @@
 import React from "react";
 import client from '../graphql/apolloClient'
 import { connect } from 'react-redux';
-import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, } from '../graphql/queries'
+import { getAllProducts, getProductsByClothesCategory, getProductsByTechCategory, getProductsBySpecificCategory } from '../graphql/queries'
 import { storedProductsAction, setCategoryAction } from '../redux/actions'
 import Navbar from "../components/navbar";
 import ProductCard from "../components/productCard";
@@ -19,6 +19,7 @@ class ProductLandingPage extends React.Component {
         this.changeCategoryClothes = this.changeCategoryClothes.bind(this)
         this.changeCategoryTech = this.changeCategoryTech.bind(this)
         this.changeCategoryAll = this.changeCategoryAll.bind(this)
+        this.changeCategory = this.changeCategory.bind(this)
     }
 
     componentDidMount() {
@@ -26,6 +27,19 @@ class ProductLandingPage extends React.Component {
             query: getAllProducts
         }).then(res => {
             // this.setState({ products: res.data.category.products })
+            this.props.setCategoryDispatch(res.data.category.name)
+            this.props.storeProductsDispatch(res.data.category.products)
+        })
+            .catch(e => console.log(e));
+    }
+
+    changeCategory(category) {
+        client.query({
+            query: getProductsBySpecificCategory,
+            variables: {
+                title: category
+            }
+        }).then(res => {
             this.props.setCategoryDispatch(res.data.category.name)
             this.props.storeProductsDispatch(res.data.category.products)
         })
@@ -69,7 +83,7 @@ class ProductLandingPage extends React.Component {
         const { products, category } = this.props
 
         // console.log(this.state.products);
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div className="container">
                 <Navbar changeCategoryClothes={this.changeCategoryClothes}
@@ -77,6 +91,10 @@ class ProductLandingPage extends React.Component {
                     changeCategoryAll={this.changeCategoryAll}
                     categoryName={category}
                 />
+
+                <button onClick={() => this.changeCategory('all')}>All</button>
+                <button onClick={() => this.changeCategory('clothes')}>Clothes</button>
+                <button onClick={() => this.changeCategory('tech')}>Tech</button>
 
                 <h1>{category} Products</h1>
 
